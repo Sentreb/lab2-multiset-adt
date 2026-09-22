@@ -1,3 +1,5 @@
+import java.beans.beancontext.BeanContextMembershipListener;
+
 /**
  * A minimal implementation of a binary search tree. See the python version for
  * additional documentation.
@@ -29,7 +31,7 @@ public class BST {
 
 
     public boolean isEmpty() {
-        return false; // TODO implement me!
+        return this.root == null;
     }
 
     public boolean contains(int item) {
@@ -47,12 +49,29 @@ public class BST {
 
 
     public void insert(int item) {
-
+        if (this.isEmpty()){
+            this.root = new Integer(item);
+            this.left = new BST();
+            this.right = new BST();
+        } else if (item <= this.root) {
+            this.left.insert(item);
+        } else {
+            this.right.insert(item);
+        }
     }
 
 
     public void delete(int item) {
-
+        if  (this.isEmpty()) {
+            return;
+        }
+        if (this.root.equals(item)) {
+            this.deleteRoot();
+        } else if (item < this.root) {
+            this.left.delete(item);
+        } else {
+            this.right.delete(item);
+        }
     }
 
     private void deleteRoot() {
